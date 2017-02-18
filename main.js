@@ -2,8 +2,8 @@
     'use strict';
 
     const
-        serviceAPI = 'https://randomuser.me/api/?results=20',
-        gettingUsers = getUsers();
+        serviceAPI = 'https://randomuser.me/api/?',
+        gettingUsers = getUsers(20);
 
     let users;
 
@@ -29,20 +29,47 @@
             return;
         }
 
-        [].forEach.call(
-            document.querySelectorAll('.user-card.clone'),
-            node => document.body.removeChild(node)
-        );
+        resetClones();
 
-        selectUserByIndex(userIndex);
+        navigateToUser(userIndex);
     }
 
-    function selectUserByIndex(userIndex) {
+    /**
+     * Not really navigating. We'll clone the user card and make some adjustments to it.
+     */
+    function navigateToUser(userIndex) {
+        const clone = cloneUserByIndex(userIndex);
+
+        setTimeout(() => clone.classList.add('full'), 0);
+    }
+
+    /**
+     * This function assumes that there will only be one cloned and one clone.
+     */
+    function resetClones() {
+        const
+            clone = document.querySelector('.user-card.clone'),
+            cloned = document.querySelector('.cloned');
+
+        if (clone) {
+            clone.remove();
+        }
+
+        if (cloned) {
+            cloned.classList.remove('cloned');
+        }
+    }
+
+    function cloneUserByIndex(userIndex) {
         const
             userCard = getUserCardByIndex(userIndex),
             clone    = createAbsoluteClone(userCard);
 
+        userCard.parentElement.classList.add('cloned');
+
         document.body.appendChild(clone);
+
+        return clone;
     }
 
     function createAbsoluteClone(node) {
@@ -60,10 +87,6 @@
 
     function getUserCardByIndex(userIndex) {
         return document.querySelector(`.user-card[data-index="${userIndex}"]`);
-    }
-
-    function removePage(e) {
-        e.currentTarget.remove();
     }
 
     function toThumbnailMarkup(user, index) {
@@ -88,8 +111,8 @@
         `;
     }
 
-    function getUsers() {
-        return fetch(serviceAPI)
+    function getUsers(requiredUserCount) {
+        return fetch(serviceAPI + 'results=' + requiredUserCount)
             .then(response => response.json())
     }
 

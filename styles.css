@@ -7,11 +7,11 @@
 
 html,
 body {
+    background : beige;
     font-family: arial;
-    margin: 0;
-    height: 100%;
-    background: white;
-    overflow-x: hidden;
+    margin     : 0;
+    height     : 100%;
+    overflow-x : hidden;
 }
 
 ul {
@@ -21,7 +21,7 @@ ul {
 
 header > h1 {
     background: yellow;
-    padding: 2rem;
+    padding   : 2rem;
 }
 
 .main-header > h1 {
@@ -34,21 +34,23 @@ header > h1 {
 }
 
 .user-card {
-    border   : 1px solid black;
-    height   : 12rem;
-    margin   : 1rem;
-    min-width: 20rem;
-    padding  : 1rem;
-    position: relative;
+    background: white;
+    border    : 1px solid black;
+    display   : flex;
+    margin    : 1rem;
+    min-width : 20rem;
+    padding   : 1rem;
+    position  : relative;
+    }
+
+    .user-card > ul {
+        flex: 1;
     }
 
     .user-card > img {
         border    : 2px solid transparent;
         cursor    : pointer;
-        position  : absolute;
-        right     : 1rem;
-        top       : 1rem;
-        transition: all .5s;
+        align-self: baseline;
     }
 
     .user-card > img:hover {
@@ -56,22 +58,22 @@ header > h1 {
     }
 
     .user-card.clone {
-        position: absolute;
-        margin : 0;
+        position  : absolute;
+        height    : 0; /* hacky, but needed to ensure animation to 100% */
+        margin    : 0;
+        transition: all .5s;
+        width     : 0; /* hacky, but needed to ensure animation to 100% */
     }
 
-.user-page {
-        animation: fadeIn .3s;
-        background: white;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        z-index: 3;
+    .user-card.clone.full {
+        border : 1px solid transparent;
+        height : 100%;
+        left   : 0 !important;
+        top    : 0 !important;
+        width  : 100%;
     }
 
-    .user-page > img {
-        position: absolute;
-        right: 2rem;
-        top: 3rem;
-    }
+.cloned {
+    visibility: hidden;
+    margin : 0;
+}
