@@ -29,7 +29,17 @@
             return;
         }
 
-        console.log(users[userIndex]);
+        [].forEach.call(
+            document.querySelectorAll('.user-page'),
+            node => document.body.removeChild(node)
+        );
+
+        document.body.insertAdjacentHTML('beforeend', createUserPageMarkup(users[userIndex]));
+        document.body.querySelector('.user-page').addEventListener('click', removePage);
+    }
+
+    function removePage(e) {
+        e.currentTarget.remove();
     }
 
     function toThumbnailMarkup(user, index) {
@@ -41,6 +51,15 @@
             </dl>
             <img src="${user.picture.medium}" data-index="${index}">
         </li>
+        `;
+    }
+
+    function createUserPageMarkup(user) {
+        return `
+            <article class="user-page">
+                <header><h1>${user.name.first} ${user.name.last}</h1></header>
+                <img src="${user.picture.large}">
+            </article>
         `;
     }
 

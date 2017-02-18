@@ -8,6 +8,8 @@
 html,
 body {
     margin: 0;
+    height: 100%;
+    background: white;
 }
 
 header > h1 {
@@ -36,4 +38,18 @@ header > h1 {
 
     .user-thumbnail > img:hover {
         border: 2px solid red;
+    }
+
+.user-page {
+        background: white;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .user-page > img {
+        position: absolute;
+        right: 2rem;
+        top: 3rem;
     }
