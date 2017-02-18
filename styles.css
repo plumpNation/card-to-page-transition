@@ -11,6 +11,12 @@ body {
     margin: 0;
     height: 100%;
     background: white;
+    overflow-x: hidden;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 header > h1 {
@@ -18,35 +24,50 @@ header > h1 {
     padding: 2rem;
 }
 
-.user-thumbnails {
-    list-style: none;
+.main-header > h1 {
+    background: red;
+}
+
+.user-cards {
     display: flex;
     flex-wrap: wrap;
 }
 
-.user-thumbnail {
+.user-card {
     border   : 1px solid black;
+    height   : 12rem;
     margin   : 1rem;
     min-width: 20rem;
     padding  : 1rem;
+    position: relative;
     }
 
-    .user-thumbnail > img {
-        border: 2px solid transparent;
-        cursor   : pointer;
-        float: right;
+    .user-card > img {
+        border    : 2px solid transparent;
+        cursor    : pointer;
+        position  : absolute;
+        right     : 1rem;
+        top       : 1rem;
+        transition: all .5s;
     }
 
-    .user-thumbnail > img:hover {
+    .user-card > img:hover {
         border: 2px solid red;
     }
 
+    .user-card.clone {
+        position: absolute;
+        margin : 0;
+    }
+
 .user-page {
+        animation: fadeIn .3s;
         background: white;
         height: 100%;
         position: absolute;
         top: 0;
         width: 100%;
+        z-index: 3;
     }
 
     .user-page > img {

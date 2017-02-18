@@ -12,7 +12,7 @@
     function buildUserList(response) {
         const
             usersMarkup = response.results.map(toThumbnailMarkup).join(''),
-            thumbnails = document.querySelector('.user-thumbnails');
+            thumbnails = document.querySelector('.user-cards');
 
         users = response.results;
 
@@ -23,19 +23,43 @@
     function onClickThumbnail(event) {
         const
             clicked = event.target,
-            userIndex = clicked.dataset.index;
+            userIndex = clicked.parentElement.dataset.index;
 
         if (clicked.tagName !== 'IMG') {
             return;
         }
 
         [].forEach.call(
-            document.querySelectorAll('.user-page'),
+            document.querySelectorAll('.user-card.clone'),
             node => document.body.removeChild(node)
         );
 
-        document.body.insertAdjacentHTML('beforeend', createUserPageMarkup(users[userIndex]));
-        document.body.querySelector('.user-page').addEventListener('click', removePage);
+        selectUserByIndex(userIndex);
+    }
+
+    function selectUserByIndex(userIndex) {
+        const
+            userCard = getUserCardByIndex(userIndex),
+            clone    = createAbsoluteClone(userCard);
+
+        document.body.appendChild(clone);
+    }
+
+    function createAbsoluteClone(node) {
+        const
+            coords = getPosition(node),
+            clone  = node.cloneNode(true);
+
+        clone.style.top      = coords.y + 'px';
+        clone.style.left     = coords.x + 'px';
+
+        clone.classList.add('clone');
+
+        return clone;
+    }
+
+    function getUserCardByIndex(userIndex) {
+        return document.querySelector(`.user-card[data-index="${userIndex}"]`);
     }
 
     function removePage(e) {
@@ -44,12 +68,13 @@
 
     function toThumbnailMarkup(user, index) {
         return `
-        <li class="user-thumbnail">
-            <dl>
-                <dt>Name</dt>
-                <dd>${user.name.first} ${user.name.last}</dd>
-            </dl>
-            <img src="${user.picture.large}" data-index="${index}">
+        <li>
+            <div class="user-card" data-index="${index}">
+                <ul>
+                    <li>${user.name.first} ${user.name.last}</li>
+                </ul>
+                <img src="${user.picture.large}">
+            </div>
         </li>
         `;
     }
@@ -70,5 +95,33 @@
 
     function init() {
         gettingUsers.then(buildUserList);
+    }
+
+    function getPosition(el) {
+        let xPos = 0,
+            yPos = 0;
+
+        while (el) {
+            if (el.tagName == 'BODY') {
+                // deal with browser quirks with body/window/document and page scroll
+                var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+                var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+                xPos += (el.offsetLeft - xScroll + el.clientLeft);
+                yPos += (el.offsetTop - yScroll + el.clientTop);
+
+            } else {
+                // for all other non-BODY elements
+                xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+                yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+            }
+
+            el = el.offsetParent;
+        }
+
+        return {
+            'x': xPos,
+            'y': yPos
+        };
     }
 }());
