@@ -9,6 +9,9 @@ small task, especially if other developers have to use and/or maintain the code.
 
 I think the secret is in faking things, a lot.
 
+## Todos
+A more subtle version of [this hover effect](https://codepen.io/wifeo/pen/qzwkb).
+
 ## Many thanks
 
 To Kirupa, whose [absolute position calculator](https://www.kirupa.com/html5/get_element_position_using_javascript.htm)
