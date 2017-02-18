@@ -49,7 +49,7 @@
                 <dt>Name</dt>
                 <dd>${user.name.first} ${user.name.last}</dd>
             </dl>
-            <img src="${user.picture.medium}" data-index="${index}">
+            <img src="${user.picture.large}" data-index="${index}">
         </li>
         `;
     }
