@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+header > h1 {
+    background: yellow;
+    padding: 2rem;
+}
+
+.user-thumbnails {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-thumbnail {
+    border   : 1px solid black;
+    margin   : 1rem;
+    min-width: 20rem;
+    padding  : 1rem;
+    }
+
+    .user-thumbnail > img {
+        border: 2px solid transparent;
+        cursor   : pointer;
+        float: right;
+    }
+
+    .user-thumbnail > img:hover {
+        border: 2px solid red;
+    }
